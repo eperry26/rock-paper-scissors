@@ -42,48 +42,79 @@ function playGame () {
     // Initialize score variables
     let humanScore = 0
     let computerScore = 0
+
+    let round = 0
+
+
     function playRound(humanChoice, computerChoice) {
-    // Make humanChoice case insensitive
+        // Make humanChoice case insensitive
 
-    if (humanChoice.toLowerCase() === computerChoice) {
-        console.log("You tied!")
+        if (humanChoice.toLowerCase() === computerChoice) {
+            console.log("You tied!")
+        }
+
+        else if (humanChoice.toLowerCase() === 'rock' & computerChoice === 'paper') {
+            console.log("Paper beats rock, computer scores a point!")
+            computerScore++
+        }
+
+        else if (humanChoice.toLowerCase() === 'paper' & computerChoice === 'rock') {
+            console.log("Paper beats rock, human scores a point!")
+            humanScore++
+        }
+
+        else if (humanChoice.toLowerCase() === 'paper' & computerChoice === 'scissors') {
+            console.log("Scissors beats paper, computer scores a point!")
+            computerScore++
+        }
+
+        else if (humanChoice.toLowerCase() === 'scissors' & computerChoice === 'paper') {
+            console.log("Scissors beats paper, human scores a point!")
+            humanScore++
+        }
+
+        else if (humanChoice.toLowerCase() === 'scissors' & computerChoice === 'rock') {
+            console.log("Rock beats scissors, computer scores a point!")
+            computerScore++
+        }
+
+        else if (humanChoice.toLowerCase() === 'rock' & computerChoice === 'scissors') {
+            console.log("Rock beats scissors, human scores a point!")
+            humanScore++
+        }
+
+} 
+    // Playing 5 rounds
+    // Use while loop to iterate through 5 rounds
+    while (round < 5) {
+        console.log("Round "+String(round+1))
+
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        playRound(humanSelection,computerSelection);
+
+        console.log("Human: "+String(humanScore)+" Computer: "+String(computerScore))
+        
+        // Increment round counter
+        round += 1
     }
 
-    else if (humanChoice.toLowerCase() === 'rock' & computerChoice === 'paper') {
-        console.log("Paper beats rock, computer scores a point!")
-        computerScore++
+    // Tell the user if they won or not
+    if (humanScore > computerScore) {
+        console.log("Congrats, you beat the computer!")
     }
 
-    else if (humanChoice.toLowerCase() === 'paper' & computerChoice === 'rock') {
-        console.log("Paper beats rock, human scores a point!")
-        humanScore++
+    else if (humanScore < computerScore) {
+        console.log("Looks like the computer beat you. Try again!")
     }
 
-    else if (humanChoice.toLowerCase() === 'paper' & computerChoice === 'scissors') {
-        console.log("Scissors beats paper, computer scores a point!")
-        computerScore++
+    else {
+        console.log("You tied with the computer!")
     }
 
-    else if (humanChoice.toLowerCase() === 'scissors' & computerChoice === 'paper') {
-        console.log("Scissors beats paper, human scores a point!")
-        humanScore++
-    }
-
-    else if (humanChoice.toLowerCase() === 'scissors' & computerChoice === 'rock') {
-        console.log("Rock beats scissors, computer scores a point!")
-        computerScore++
-    }
-
-    else if (humanChoice.toLowerCase() === 'rock' & computerChoice === 'scissors') {
-        console.log("Rock beats scissors, human scores a point!")
-        humanScore++
-    }
 
 }
 
-}
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);
+// Call function to play game
+playGame()
