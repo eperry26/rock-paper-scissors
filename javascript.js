@@ -6,7 +6,7 @@ function getComputerChoice() {
     // this function will output a random choice that can be rock, paper or scissors
 
     // My brainstorming (:
-    // the Math.random() function can be utilized here. It return a number between 0 and 1
+    // the Math.random() function can be utilized here. It returns a number between 0 and 1
     // could multiply by 100 and add 1, then create a conditional. Rock is between 0 and 33, Paper is between 34-66 and scissors is between 67-100
 
     let comp_choice = ""
@@ -30,11 +30,7 @@ function getComputerChoice() {
 
 }
 
-function getHumanChoice () {
-    // User input to get human choice. Use prompt()
-    human_choice = prompt("Rock, Paper, or Scissors?: ")
-    return human_choice
-}
+
 
 
 
@@ -43,78 +39,145 @@ function playGame () {
     let humanScore = 0
     let computerScore = 0
 
-    let round = 0
+    let round = 1
+
+    const resultsDiv = document.querySelector("#results");
 
 
     function playRound(humanChoice, computerChoice) {
         // Make humanChoice case insensitive
 
         if (humanChoice.toLowerCase() === computerChoice) {
-            console.log("You tied!")
+            // console.log("You tied!");
+            resultsDiv.textContent = "You tied!";
         }
 
         else if (humanChoice.toLowerCase() === 'rock' & computerChoice === 'paper') {
-            console.log("Paper beats rock, computer scores a point!")
-            computerScore++
+            // console.log("Paper beats rock, computer scores a point!");
+            resultsDiv.textContent = "Paper beats rock, computer scores a point!";
+            computerScore++;
         }
 
         else if (humanChoice.toLowerCase() === 'paper' & computerChoice === 'rock') {
-            console.log("Paper beats rock, human scores a point!")
-            humanScore++
+            // console.log("Paper beats rock, human scores a point!");
+            resultsDiv.textContent = "Paper beats rock, human scores a point!";
+            humanScore++;
         }
 
         else if (humanChoice.toLowerCase() === 'paper' & computerChoice === 'scissors') {
-            console.log("Scissors beats paper, computer scores a point!")
-            computerScore++
+            // console.log("Scissors beats paper, computer scores a point!");
+            resultsDiv.textContent = "Scissors beats paper, computer scores a point!";
+            computerScore++;
         }
 
         else if (humanChoice.toLowerCase() === 'scissors' & computerChoice === 'paper') {
-            console.log("Scissors beats paper, human scores a point!")
-            humanScore++
+            // console.log("Scissors beats paper, human scores a point!");
+            resultsDiv.textContent = "Scissors beats paper, human scores a point!";
+            humanScore++;
         }
 
         else if (humanChoice.toLowerCase() === 'scissors' & computerChoice === 'rock') {
-            console.log("Rock beats scissors, computer scores a point!")
-            computerScore++
+            // console.log("Rock beats scissors, computer scores a point!");
+            resultsDiv.textContent = "Rock beats scissors, computer scores a point!";
+            computerScore++;
         }
 
         else if (humanChoice.toLowerCase() === 'rock' & computerChoice === 'scissors') {
-            console.log("Rock beats scissors, human scores a point!")
-            humanScore++
+            // console.log("Rock beats scissors, human scores a point!");
+            resultsDiv.textContent = "Rock beats scissors, human scores a point!";
+            humanScore++;
         }
 
 } 
-    // Playing 5 rounds
-    // Use while loop to iterate through 5 rounds
-    while (round < 5) {
-        console.log("Round "+String(round+1))
 
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection,computerSelection);
+    
 
-        console.log("Human: "+String(humanScore)+" Computer: "+String(computerScore))
-        
-        // Increment round counter
-        round += 1
-    }
+    //display score of round
+    const score = document.createElement("p");
+    score.textContent = "Human: "+String(humanScore)+" Computer: "+String(computerScore);
+    resultsDiv.appendChild(score);
 
-    // Tell the user if they won or not
-    if (humanScore > computerScore) {
-        console.log("Congrats, you beat the computer!")
-    }
-
-    else if (humanScore < computerScore) {
-        console.log("Looks like the computer beat you. Try again!")
-    }
-
-    else {
-        console.log("You tied with the computer!")
-    }
+    const roundNum = document.createElement("h2");
+    roundNum.textContent = "Round "+String(round);
+    resultsDiv.appendChild(roundNum);
 
 
+    let choices = document.querySelector("#choices");
+    choices.addEventListener('click', (event) => {
+        let target = event.target;
+
+            switch(target.id) {
+                case 'rock':
+                    playRound('rock', getComputerChoice());
+                    score.textContent = "Human: "+String(humanScore)+" Computer: "+String(computerScore);
+                    resultsDiv.appendChild(score);
+                    
+                    round++
+                    roundNum.textContent = "Round "+String(round);
+                    resultsDiv.appendChild(roundNum);
+
+                    break;
+                case 'paper':
+                    playRound('paper',getComputerChoice());
+                    score.textContent = "Human: "+String(humanScore)+" Computer: "+String(computerScore);
+                    resultsDiv.appendChild(score);
+
+                    round++
+                    roundNum.textContent = "Round "+String(round);
+                    resultsDiv.appendChild(roundNum);
+
+
+                    break;
+                case 'scissors':
+                    playRound('scissors',getComputerChoice());
+                    score.textContent = "Human: "+String(humanScore)+" Computer: "+String(computerScore);
+                    resultsDiv.appendChild(score);
+
+                    round++
+                    roundNum.textContent = "Round "+String(round);
+                    resultsDiv.appendChild(roundNum);
+
+
+                    break;
+            }
+        // Playing 5 rounds per game
+        // include option to play another game
+        if (round > 5) {
+            // Tell the user if they won or not
+            const finalResult = document.createElement('h1');
+            if (humanScore > computerScore) {
+                finalResult.textContent = "Congrats, you beat the computer!";
+                resultsDiv.appendChild(finalResult);
+                // remove the round number element since game over. 
+                roundNum.remove();
+                // remove the button elements so that user doesn't play more than 5 rounds in a game
+                choices.remove();
+
+            }
+
+            else if (humanScore < computerScore) {
+                finalResult.textContent = "Looks like the computer beat you. Try again!";
+                resultsDiv.appendChild(finalResult);
+                // remove the round number element since game is over
+                roundNum.remove();
+                // remove the button elements so that user doesn't play more than 5 rounds in a game
+                choices.remove();
+            }
+
+            else {
+                finalResult.textContent = "You tied with the computer!";
+                resultsDiv.appendChild(finalResult);
+                // remove the round number element since game is over
+                roundNum.remove();
+                // remove the button elements so that user doesn't play more than 5 rounds in a game
+                choices.remove();
+            }
+        }
+            
+
+        })
 }
-
 
 // Call function to play game
 playGame()
+
